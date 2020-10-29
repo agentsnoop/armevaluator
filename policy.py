@@ -229,8 +229,6 @@ class Policy(Base):
 			success = self.evaluate_value(value, field=original_field, **kwargs)
 
 			# Keep track of "targeted" resource
-			# if field == "type":
-			# 	print self.resource.get("type"), value, success, self.target
 			if field == "type" and success:
 				self.target = True
 
@@ -259,44 +257,16 @@ class Policy(Base):
 		elif "exists" in kwargs:
 			success = (value is not None) == kwargs["exists"]
 		elif "in" in kwargs:
-			# container = kwargs["in"]
-			# if not container:
-			# 	container = []
-			# if isinstance(container, list):
-			# 	container = [str(v).lower() for v in container]
-			# success = str(value).lower() in container
 			success = self._in_(value, kwargs.get("in", []))
 		elif "notIn" in kwargs:
-			# container = kwargs["notIn"]
-			# if not container:
-			# 	container = []
-			# if isinstance(container, list):
-			# 	container = [str(v).lower() for v in container]
-			# success = str(value).lower() not in container
 			success = not self._in_(value, kwargs.get("notIn", []))
 		elif "contains" in kwargs:
-			# container = kwargs["contains"]
-			# if not container:
-			# 	container = []
-			# success = str(value).lower() in [str(v).lower() for v in container.values()]
 			success = self._contains_(value, kwargs.get("contains", {}).values())
 		elif "notContains" in kwargs:
-			# container = kwargs["notContains"]
-			# if not container:
-			# 	container = {}
-			# success = str(value).lower() not in [str(v).lower() for v in container.values()]
 			success = not self._contains_(value, kwargs.get("notContains", {}).values())
 		elif "containsKey" in kwargs:
-			# container = kwargs["containsKey"]
-			# if not container:
-			# 	container = {}
-			# success = value in container
 			success = self._contains_(value, kwargs.get("containsKey", {}).keys())
 		elif "notContainsKey" in kwargs:
-			# container = kwargs["notContainsKey"]
-			# if not container:
-			# 	container = {}
-			# success = value not in container
 			success = not self._contains_(value, kwargs.get("notContainsKey", {}).keys())
 		elif "like" in kwargs:
 			success = self._like_(value, kwargs["like"])

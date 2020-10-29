@@ -233,12 +233,9 @@ class Base(object):
 			result = ""
 
 		copy_params = result.split(",")
-		# copy_params = self._split(str(result), ",")
-		# copy_params = obj[start:end].split(",")
 
 		if len(copy_params) == 2:
 			copy_offset = int(copy_params[1].strip())
-		# elif copy_params[0].strip() and not copy_params[0] == copy_name:
 		elif copy_params[0].strip() and not copy_params[0] == "'{name}'".format(name=copy_name):
 			copy_offset = int(copy_params[0].strip())
 		else:
@@ -292,7 +289,6 @@ class Base(object):
 			kv = rg.get_key_vault(resource_data["resource_name"])
 
 			if kv and "secretName" in obj:
-				# secret_name = self._evaluate_string(obj["secretName"])
 				secret_name = obj["secretName"]
 				try:
 					value = kv.get_secret(secret_name).value
